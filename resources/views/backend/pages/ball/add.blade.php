@@ -13,21 +13,21 @@
                         <h3 class="card-title">{{ $header['title'] }}</h3>
                     </div>
                      <!--begin::Form-->
-                     <form class="form" id="add-bucket" method="POST" action="{{ route('bucket.save-add-bucket') }}">@csrf
+                     <form class="form" id="add-ball" method="POST" action="{{ route('ball.save-add-ball') }}">@csrf
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Buckets name
+                                        <label>Ball Name
                                         <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" name="bucket" class="form-control" placeholder="Enter bucket name" >
+                                        <input type="text" name="ball" class="form-control" placeholder="Enter bucket name" >
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Buckets Volume
+                                        <label>Ball Volume
                                         <span class="text-danger">*</span>
                                         </label>
                                         <input type="text" name="volume" class="form-control" placeholder="Enter bucket volume" >

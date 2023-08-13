@@ -88,12 +88,12 @@ class Buckets extends Model
     }
 
     public function saveAdd($requestData){
-        $checkBranchName = Buckets::from('buckets')
+        $checkBucketName = Buckets::from('buckets')
                     ->where('buckets.buckets', $requestData['bucket'])
                     ->where('buckets.is_deleted', 'N')
                     ->count();
 
-        if($checkBranchName == 0){
+        if($checkBucketName == 0){
             $objBuckets = new Buckets();
             $objBuckets->buckets = $requestData['bucket'];
             $objBuckets->volume = $requestData['volume'];
@@ -115,18 +115,18 @@ class Buckets extends Model
     public function get_buckets_details($bucketsId){
         return Buckets::from('buckets')
                 ->where("buckets.id", $bucketsId)
-                ->select('buckets.id', 'buckets.buckets', '.volume', 'buckets.status')
+                ->select('buckets.id', 'buckets.buckets', 'buckets.volume', 'buckets.status')
                 ->first();
     }
 
     public function saveEdit($requestData){
-        $checkBranchName = Buckets::from('buckets')
+        $checkBucketName = Buckets::from('buckets')
                     ->where('buckets.buckets', $requestData['bucket'])
                     ->where('buckets.is_deleted', 'N')
                     ->where('buckets.id', '!=', $requestData['buckets_id'])
                     ->count();
 
-        if($checkBranchName == 0){
+        if($checkBucketName == 0){
             $objBuckets = Buckets::find($requestData['buckets_id']);
             $objBuckets->buckets = $requestData['bucket'];
             $objBuckets->volume = $requestData['volume'];
@@ -134,7 +134,7 @@ class Buckets extends Model
             $objBuckets->updated_at = date('Y-m-d H:i:s');
             if($objBuckets->save()){
                 $objAudittrails = new Audittrails();
-                $objAudittrails->add_audit("U", $requestData, 'Buckets');
+                $objAudittrails->add_audit("U", $requestData->all(), 'Buckets');
                 return 'updated';
             }else{
                 return 'wrong';

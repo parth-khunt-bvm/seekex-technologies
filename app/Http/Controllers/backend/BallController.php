@@ -65,7 +65,7 @@ class BallController extends Controller
             'comman_function.js',
             'ajaxfileupload.js',
             'jquery.form.min.js',
-            'buckets.js',
+            'ball.js',
         );
         $data['funinit'] = array(
             'Ball.add()'
@@ -105,10 +105,10 @@ class BallController extends Controller
     public function edit ($bucketsId){
 
         $objBalls = new Balls();
-        $data['buckets_details'] = $objBalls->get_buckets_details($bucketsId);
-        $data['title'] = Config::get( 'constants.PROJECT_NAME' ) . " || Edit Buckets";
-        $data['description'] = Config::get( 'constants.PROJECT_NAME' ) . " || Edit Buckets";
-        $data['keywords'] = Config::get( 'constants.PROJECT_NAME' ) . " || Edit Buckets";
+        $data['buckets_details'] = $objBalls->get_balls_details($bucketsId);
+        $data['title'] = Config::get( 'constants.PROJECT_NAME' ) . " || Edit Ball";
+        $data['description'] = Config::get( 'constants.PROJECT_NAME' ) . " || Edit Ball";
+        $data['keywords'] = Config::get( 'constants.PROJECT_NAME' ) . " || Edit Ball";
         $data['css'] = array(
             'toastr/toastr.min.css'
         );
@@ -123,20 +123,20 @@ class BallController extends Controller
             'comman_function.js',
             'ajaxfileupload.js',
             'jquery.form.min.js',
-            'buckets.js',
+            'ball.js',
         );
         $data['funinit'] = array(
-            'Buckets.edit()'
+            'Ball.edit()'
         );
         $data['header'] = array(
-            'title' => 'Edit Buckets',
+            'title' => 'Edit Ball',
             'breadcrumb' => array(
                 'My Dashboard' => route('my-dashboard'),
-                'Buckets List' => route('bucket.list'),
-                'Edit Buckets' => 'Edit Buckets',
+                'Ball List' => route('ball.list'),
+                'Edit Ball' => 'Edit Ball',
             )
         );
-        return view('backend.pages.buckets.edit', $data);
+        return view('backend.pages.ball.edit', $data);
     }
 
     public function saveEdit(Request $request){
@@ -145,12 +145,12 @@ class BallController extends Controller
         if ($result == "updated") {
             $return['status'] = 'success';
              $return['jscode'] = '$(".submitbtn:visible").removeAttr("disabled");$("#loader").hide();';
-            $return['message'] = 'Buckets details successfully updated.';
-            $return['redirect'] = route('bucket.list');
-        } elseif ($result == "bucket_name_exists") {
+            $return['message'] = 'Ball details successfully updated.';
+            $return['redirect'] = route('ball.list');
+        } elseif ($result == "ball_name_exists") {
             $return['status'] = 'warning';
             $return['jscode'] = '$(".submitbtn:visible").removeAttr("disabled");$("#loader").hide();';
-            $return['message'] = 'Bucket has already exists.';
+            $return['message'] = 'Ball has already exists.';
         }  else{
             $return['status'] = 'error';
             $return['jscode'] = '$(".submitbtn:visible").removeAttr("disabled");$("#loader").hide();';

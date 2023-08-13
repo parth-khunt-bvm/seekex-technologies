@@ -114,4 +114,60 @@ class Balls extends Model
             return false ;
         }
     }
+
+    public function saveAdd($requestData){
+        $checkBallName = Balls::from('balls')
+                    ->where('balls.balls', $requestData['ball'])
+                    ->where('balls.is_deleted', 'N')
+                    ->count();
+
+        if($checkBallName == 0){
+            $objBalls = new Balls();
+            $objBalls->balls = $requestData['ball'];
+            $objBalls->volume = $requestData['volume'];
+            $objBalls->status = $requestData['status'];
+            $objBalls->is_deleted = 'N';
+            $objBalls->created_at = date('Y-m-d H:i:s');
+            $objBalls->updated_at = date('Y-m-d H:i:s');
+            if($objBalls->save()){
+                $objAudittrails = new Audittrails();
+                $objAudittrails->add_audit("I", $requestData->all(), 'Balls');
+                return 'added';
+            }else{
+                return 'wrong';
+            }
+        }
+        return 'ball_name_exists';
+    }
+
+    public function get_balls_details($ballId){
+        return Balls::from('balls')
+                ->where("balls.id", $ballId)
+                ->select('balls.id', 'balls.balls', 'balls.volume', 'balls.status')
+                ->first();
+    }
+
+    public function saveEdit($requestData){
+        $checkBallName = Balls::from('balls')
+                    ->where('balls.balls', $requestData['ball'])
+                    ->where('balls.is_deleted', 'N')
+                    ->where('balls.id', '!=', $requestData['ballId'])
+                    ->count();
+
+        if($checkBallName == 0){
+            $objBalls = Balls::find($requestData['ballId']);
+            $objBalls->balls = $requestData['ball'];
+            $objBalls->volume = $requestData['volume'];
+            $objBalls->status = $requestData['status'];
+            $objBalls->updated_at = date('Y-m-d H:i:s');
+            if($objBalls->save()){
+                $objAudittrails = new Audittrails();
+                $objAudittrails->add_audit("U", $requestData->all(), 'Balls');
+                return 'updated';
+            }else{
+                return 'wrong';
+            }
+        }
+        return 'ball_name_exists';
+    }
 }

@@ -88,7 +88,7 @@ var Buckets = function(){
             });
         });
     }
-    var addBranch = function(){
+    var addBucket = function(){
         var form = $('#add-bucket');
         var rules = {
             bucket : {required: true},
@@ -105,7 +105,7 @@ var Buckets = function(){
             handleAjaxFormSubmit(form,true);
         });
     }
-    var editBranch = function(){
+    var editBucket = function(){
         var form = $('#edit-bucket');
         var rules = {
             bucket : {required: true},
@@ -127,10 +127,10 @@ var Buckets = function(){
             list();
         },
         add:function(){
-            addBranch();
+            addBucket();
         },
         edit:function(){
-            editBranch();
+            editBucket();
         }
     }
 }();

@@ -35,9 +35,9 @@ Route::group(['prefix' => $adminPrefix, 'middleware' => ['admin']], function() {
 
     Route::get('ball/list', [BallController::class, 'list'])->name('ball.list');
     Route::get('ball/add', [BallController::class, 'add'])->name('ball.add');
-    Route::post('ball/save-add-bucket', [BallController::class, 'saveAdd'])->name('ball.save-add-bucket');
+    Route::post('ball/save-add-ball', [BallController::class, 'saveAdd'])->name('ball.save-add-ball');
     Route::get('ball/edit/{id}', [BallController::class, 'edit'])->name('ball.edit');
-    Route::post('ball/save-edit-bucket', [BallController::class, 'saveEdit'])->name('ball.save-edit-bucket');
+    Route::post('ball/save-edit-ball', [BallController::class, 'saveEdit'])->name('ball.save-edit-ball');
     Route::post('ball/ajaxcall', [BallController::class, 'ajaxcall'])->name('ball.ajaxcall');
 
 });

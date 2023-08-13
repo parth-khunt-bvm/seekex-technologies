@@ -88,7 +88,7 @@ var Ball = function(){
             });
         });
     }
-    var addBranch = function(){
+    var addBall = function(){
         var form = $('#add-ball');
         var rules = {
             ball : {required: true},
@@ -105,7 +105,7 @@ var Ball = function(){
             handleAjaxFormSubmit(form,true);
         });
     }
-    var editBranch = function(){
+    var editBall = function(){
         var form = $('#edit-ball');
         var rules = {
             ball : {required: true},
@@ -127,10 +127,10 @@ var Ball = function(){
             list();
         },
         add:function(){
-            addBranch();
+            addBall();
         },
         edit:function(){
-            editBranch();
+            editBall();
         }
     }
 }();
