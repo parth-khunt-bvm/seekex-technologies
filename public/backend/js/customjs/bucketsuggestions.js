@@ -1,4 +1,5 @@
 var Bucketsuggestions = function(){
+    var capacityAvailable = true;
     function ballBucketCalculation(){
         var bucketVol = 0.00;
         var count = false;
@@ -21,6 +22,7 @@ var Bucketsuggestions = function(){
 
         if(count){
             if(remainingSpace == 0){
+                capacityAvailable = false;
                 remainingSpaceHtml = '<div class="alert alert-custom alert-notice alert-light-success fade show mb-5" role="alert">'+
                             '<div class="alert-icon">'+
                                 '<i class="flaticon-success"></i>'+
@@ -28,6 +30,7 @@ var Bucketsuggestions = function(){
                             '<div class="alert-text">There are no more slots in the bucket.!</div>'+
                         '</div>';
             }else if(remainingSpace < 0){
+                capacityAvailable = false;
                 remainingSpaceHtml = '<div class="alert alert-custom alert-notice alert-light-danger fade show mb-5" role="alert">'+
                             '<div class="alert-icon">'+
                                 '<i class="flaticon-danger"></i>'+
@@ -35,12 +38,13 @@ var Bucketsuggestions = function(){
                             '<div class="alert-text">A bucket has reached its capacity</div>'+
                         '</div>';
             }else{
+                capacityAvailable = true;
                 remainingSpaceHtml = '<div class="alert alert-custom alert-notice alert-light-warning fade show mb-5" role="alert">'+
-                '<div class="alert-icon">'+
-                    '<i class="flaticon-warning"></i>'+
-                '</div>'+
-                '<div class="alert-text">There are slots available in the bucket.!</div>'+
-            '</div>';
+                    '<div class="alert-icon">'+
+                        '<i class="flaticon-warning"></i>'+
+                    '</div>'+
+                    '<div class="alert-text">There are slots available in the bucket.!</div>'+
+                '</div>';
             }
         }
 
@@ -65,25 +69,28 @@ var Bucketsuggestions = function(){
                 $('.bucket-error').text('Please select bucket');
             }else{
                 $('.bucket-error').text('');
+                capacityAvailable = true;
                 var bucketVolume = $("#bucket").select2().find(":selected").data('volume');
                 var buckets = $("#bucket").select2().find(":selected").data('buckets');
-                var html ='<div class="row removediv">'+
-                    '<div class="col-md-5">'+
-                        '<div class="form-group">'+
-                            '<label>Buckets name  </label>'+
-                            '<input type="text" name="bucket[]" class="form-control" placeholder="Enter bucket name" value="'+buckets+'" readonly>'+
+                var html ='<div class="col-md-6 removediv">'+
+                    '<div class="row">'+
+                        '<div class="col-md-5">'+
+                            '<div class="form-group">'+
+                                '<label>Buckets name  </label>'+
+                                '<input type="text" name="bucket[]" class="form-control" placeholder="Enter bucket name" value="'+buckets+'" readonly>'+
+                            '</div>'+
                         '</div>'+
-                    '</div>'+
-                    '<div class="col-md-5">'+
-                        '<div class="form-group">'+
-                            '<label>Buckets volume </label>'+
-                            '<input type="text" name="bucket_volume[]" class="form-control bucket-vol" placeholder="Enter bucket volume" value="'+ bucketVolume +'" readonly>'+
+                        '<div class="col-md-5">'+
+                            '<div class="form-group">'+
+                                '<label>Buckets volume </label>'+
+                                '<input type="text" name="bucket_volume[]" class="form-control bucket-vol" placeholder="Enter bucket volume" value="'+ bucketVolume +'" readonly>'+
+                            '</div>'+
                         '</div>'+
-                    '</div>'+
-                    '<div class="col-md-2">'+
-                        '<div class="form-group">'+
-                        '<label>&nbsp;</label><br>'+
-                        '<a href="javascript:;" class="my-btn btn btn-danger remove-items"><i class="my-btn fa fa-minus"></i></a>'+
+                        '<div class="col-md-2">'+
+                            '<div class="form-group">'+
+                            '<label>&nbsp;</label><br>'+
+                            '<a href="javascript:;" class="my-btn btn btn-danger remove-items"><i class="my-btn fa fa-minus"></i></a>'+
+                            '</div>'+
                         '</div>'+
                     '</div>'+
                 '</div>';
@@ -98,31 +105,36 @@ var Bucketsuggestions = function(){
             if(ballValue == null || ballValue == ''){
                 $('.ball-error').text('Please select ball');
             }else{
-                $('.bucket-error').text('');
-                var ballVolume = $("#ball").select2().find(":selected").data('volume');
-                var balls = $("#ball").select2().find(":selected").data('ball');
-                var html ='<div class="row removediv">'+
-                    '<div class="col-md-5">'+
-                        '<div class="form-group">'+
-                            '<label>Balls name  </label>'+
-                            '<input type="text" name="ball[]" class="form-control" placeholder="Enter ball name" value="'+balls+'" readonly>'+
-                        '</div>'+
-                    '</div>'+
-                    '<div class="col-md-5">'+
-                        '<div class="form-group">'+
-                            '<label>balls volume </label>'+
-                            '<input type="text" name="ball_volume[]" class="form-control ball-vol" placeholder="Enter ball volume" value="'+ ballVolume +'" readonly>'+
-                        '</div>'+
-                    '</div>'+
-                    '<div class="col-md-2">'+
-                        '<div class="form-group">'+
-                        '<label>&nbsp;</label><br>'+
-                        '<a href="javascript:;" class="my-btn btn btn-danger remove-items"><i class="my-btn fa fa-minus"></i></a>'+
-                        '</div>'+
-                    '</div>'+
-                '</div>';
-                $('#ball-details').append(html);
                 ballBucketCalculation();
+                if(capacityAvailable){
+                    $('.bucket-error').text('');
+                    var ballVolume = $("#ball").select2().find(":selected").data('volume');
+                    var balls = $("#ball").select2().find(":selected").data('ball');
+                    var html ='<div class="col-md-6 removediv">'+
+                        '<div class="row">'+
+                            '<div class="col-md-5">'+
+                                '<div class="form-group">'+
+                                    '<label>Buckets name  </label>'+
+                                    '<input type="text" name="ball[]" class="form-control" placeholder="Enter ball name" value="'+balls+'" readonly>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="col-md-5">'+
+                                '<div class="form-group">'+
+                                    '<label>Buckets volume </label>'+
+                                    '<input type="text" name="ball_volume[]" class="form-control ball-vol" placeholder="Enter ball volume" value="'+ ballVolume +'" readonly>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="col-md-2">'+
+                                '<div class="form-group">'+
+                                '<label>&nbsp;</label><br>'+
+                                '<a href="javascript:;" class="my-btn btn btn-danger remove-items"><i class="my-btn fa fa-minus"></i></a>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>';
+                    $('#ball-details').append(html);
+                    ballBucketCalculation();
+                }
             }
         });
     }

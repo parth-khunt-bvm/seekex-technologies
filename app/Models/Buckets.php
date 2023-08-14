@@ -176,6 +176,7 @@ class Buckets extends Model
                 ->select('buckets.id', 'buckets.buckets', 'buckets.volume')
                 ->where('buckets.status', 'A')
                 ->where('buckets.is_deleted', 'N')
+                ->orderBy('buckets.volume', 'desc')
                 ->get()
                 ->toArray();
     }

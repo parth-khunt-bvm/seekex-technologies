@@ -83,7 +83,14 @@
                                     <hr>
                                     </div>
                                 </div>
-                                <div  id="buckets-details"></div>
+                                <div class="row">
+                                    <div class="col-md-12" >
+                                        <div class="form-group" >
+                                            <div class="row" id="buckets-details">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="row">
                                     <div class="col-md-12">
@@ -94,7 +101,16 @@
                                     <hr>
                                     </div>
                                 </div>
-                                <div id="ball-details"></div>
+
+                                <div class="row">
+                                    <div class="col-md-12" >
+                                        <div class="form-group" >
+                                            <div class="row" id="ball-details">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
 
                             <div class="card-footer">

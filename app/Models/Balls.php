@@ -176,6 +176,7 @@ class Balls extends Model
                 ->select('balls.id', 'balls.balls', 'balls.volume')
                 ->where('balls.status', 'A')
                 ->where('balls.is_deleted', 'N')
+                ->orderBy('balls.volume', 'desc')
                 ->get()
                 ->toArray();
     }
