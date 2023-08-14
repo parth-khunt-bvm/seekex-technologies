@@ -73,7 +73,7 @@ class Balls extends Model
             $nestedData = array();
             $nestedData[] = $i;
             $nestedData[] = $row['balls'];
-            $nestedData[] = $row['volume'];
+            $nestedData[] = numberformat($row['volume']);
             $nestedData[] = $status;
             $nestedData[] = $actionhtml;
             $data[] = $nestedData;
@@ -169,5 +169,14 @@ class Balls extends Model
             }
         }
         return 'ball_name_exists';
+    }
+
+    public function get_ball_list(){
+        return Buckets::from('balls')
+                ->select('balls.id', 'balls.balls', 'balls.volume')
+                ->where('balls.status', 'A')
+                ->where('balls.is_deleted', 'N')
+                ->get()
+                ->toArray();
     }
 }

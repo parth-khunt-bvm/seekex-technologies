@@ -73,7 +73,7 @@ class Buckets extends Model
             $nestedData = array();
             $nestedData[] = $i;
             $nestedData[] = $row['buckets'];
-            $nestedData[] = $row['volume'];
+            $nestedData[] = numberformat($row['volume']);
             $nestedData[] = $status;
             $nestedData[] = $actionhtml;
             $data[] = $nestedData;
@@ -169,5 +169,14 @@ class Buckets extends Model
         }else{
             return false ;
         }
+    }
+
+    public function get_bucket_list(){
+        return Buckets::from('buckets')
+                ->select('buckets.id', 'buckets.buckets', 'buckets.volume')
+                ->where('buckets.status', 'A')
+                ->where('buckets.is_deleted', 'N')
+                ->get()
+                ->toArray();
     }
 }

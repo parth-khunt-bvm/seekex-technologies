@@ -31,7 +31,7 @@
                                         <label>Buckets Volume
                                         <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" name="volume" class="form-control" placeholder="Enter bucket volume" value="{{ $buckets_details->volume}}" >
+                                        <input type="text" name="volume" class="form-control" placeholder="Enter bucket volume" value="{{ numberformat($buckets_details->volume)}}" >
                                     </div>
                                 </div>
 
