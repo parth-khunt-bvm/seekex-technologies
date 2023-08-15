@@ -47,8 +47,6 @@ var Bucketsuggestions = function(){
                 '</div>';
             }
         }
-
-
         $("#remaining-space").html(remainingSpaceHtml);
     }
 
@@ -58,22 +56,91 @@ var Bucketsuggestions = function(){
     });
 
     var bucketsuggestionsList = function(){
-
+        var dataArr = {};
+        var columnWidth = { "width": "5%", "targets": 0 };
+        var arrList = {
+            'tableID': '#bucket-suggestions-list',
+            'ajaxURL': baseurl + "bucket-suggestions/ajaxcall",
+            'ajaxAction': 'getdatatable',
+            'postData': dataArr,
+            'hideColumnList': [],
+            'noSortingApply': [0, 4],
+            'noSearchApply': [0, 4],
+            'defaultSortColumn': [0],
+            'defaultSortOrder': 'DESC',
+            'setColumnWidth': columnWidth
+        };
+        getDataTable(arrList);
     }
     var addBucketsuggestions = function(){
         $('.select2').select2();
 
-        var form = $('#add-bucket-suggestions');
-        var rules = {
-            bucketSuggestions : {required: true},
-        };
+        var validateTrip = true;
+        var customValid = true;
 
-        var message = {
-            bucketSuggestions : {required: "Please enter bucket suggestions name"},
-        }
-        handleFormValidateWithMsg(form, rules,message, function(form) {
-            handleAjaxFormSubmit(form,true);
+        $('#add-bucket-suggestions').validate({
+            debug: true,
+            errorElement: 'span', //default input error message container
+            errorClass: 'help-block', // default input error message class
+
+            rules : {
+                bucketSuggestions : {required: true},
+            },
+
+            messages : {
+                bucketSuggestions : {required: "Please enter bucket suggestions name"},
+            },
+
+            invalidHandler: function (event, validator) {
+                validateTrip = false;
+                customValid = customerInfoValid();
+
+            },
+
+            submitHandler: function (form) {
+                $(".submitbtn:visible").attr("disabled", "disabled");
+                $("#loader").show();
+                customValid = customerInfoValid();
+                if (customValid)
+                {
+                    var options = {
+                        resetForm: false, // reset the form after successful submit
+                        success: function (output) {
+                            handleAjaxResponse(output);
+                        }
+                    };
+                    $(form).ajaxSubmit(options);
+                }else{
+                    $(".submitbtn:visible").prop("disabled",false);
+                    $("#loader").hide();
+                }
+            },
+
+            errorPlacement: function(error, element) {
+                customValid = customerInfoValid();
+                var elem = $(element);
+                if (elem.hasClass("select2-hidden-accessible")) {
+                    element = $("#select2-" + elem.attr("id") + "-container").parent();
+                    error.insertAfter(element);
+                }else {
+                    if (elem.hasClass("radio-btn")) {
+                        element = elem.parent().parent();
+                        error.insertAfter(element);
+                    }else{
+                        error.insertAfter(element);
+                    }
+                }
+            },
         });
+
+        function customerInfoValid() {
+            var customValid = true;
+            ballBucketCalculation();
+            if(capacityAvailable){
+                customValid = false;
+            }
+            return customValid;
+        }
 
         $('body').on('click', '.add-bucket', function(){
             var bucketValue = $("#bucket").select2().find(":selected").val();
@@ -107,7 +174,6 @@ var Bucketsuggestions = function(){
                     '</div>'+
                 '</div>';
                 $('#buckets-details').append(html);
-
                 ballBucketCalculation();
             }
         });
@@ -149,6 +215,7 @@ var Bucketsuggestions = function(){
                 }
             }
         });
+
     }
     var editBucketsuggestions = function(){
         alert('editBucketsuggestions');

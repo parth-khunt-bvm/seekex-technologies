@@ -37,6 +37,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Name</th>
                             <th>Buckets</th>
                             <th>Balls</th>
                             <th>Action</th>

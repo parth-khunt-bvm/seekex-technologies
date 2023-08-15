@@ -108,4 +108,16 @@ class BucketsuggestionsController extends Controller
         echo json_encode($return);
         exit;
     }
+
+    public function ajaxcall(Request $request){
+        $action = $request->input('action');
+        switch ($action) {
+            case 'getdatatable':
+                $objBucketsuggestions = new Bucketsuggestions();
+                $list = $objBucketsuggestions->getdatatable();
+
+                echo json_encode($list);
+                break;
+        }
+    }
 }
