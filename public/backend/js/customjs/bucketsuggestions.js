@@ -63,6 +63,18 @@ var Bucketsuggestions = function(){
     var addBucketsuggestions = function(){
         $('.select2').select2();
 
+        var form = $('#add-bucket-suggestions');
+        var rules = {
+            bucketSuggestions : {required: true},
+        };
+
+        var message = {
+            bucketSuggestions : {required: "Please enter bucket suggestions name"},
+        }
+        handleFormValidateWithMsg(form, rules,message, function(form) {
+            handleAjaxFormSubmit(form,true);
+        });
+
         $('body').on('click', '.add-bucket', function(){
             var bucketValue = $("#bucket").select2().find(":selected").val();
             if(bucketValue == null || bucketValue == ''){

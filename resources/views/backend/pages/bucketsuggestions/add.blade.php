@@ -67,13 +67,27 @@
                                 </div>
                             </div>
                         </div>
-                        <form class="form" id="add-bucket" method="POST" action="{{ route('bucket.save-add-bucket') }}">@csrf
+                        <hr>
+                        <form class="form" id="add-bucket-suggestions" method="POST" action="{{ route('bucket-suggestions.save-add-ball') }}">@csrf
                             <div class="card-body">
+
                                 <div class="row">
                                     <div class="col-md-12" id="remaining-space">
 
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Bucket Suggestions Name
+                                            <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="text" name="bucketSuggestions" class="form-control" placeholder="Enter bucket suggestions name" >
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="row">
                                     <div class="col-md-12">
                                         <h5 class="card-title">

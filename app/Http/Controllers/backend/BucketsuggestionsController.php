@@ -87,4 +87,25 @@ class BucketsuggestionsController extends Controller
         );
         return view('backend.pages.bucketsuggestions.add', $data);
     }
+
+    public function saveAdd(Request $request){
+        $objBucketsuggestions = new Bucketsuggestions();
+        $result = $objBucketsuggestions->saveAdd($request);
+        if ($result == "added") {
+            $return['status'] = 'success';
+             $return['jscode'] = '$(".submitbtn:visible").removeAttr("disabled");$("#loader").hide();';
+            $return['message'] = 'Bucket suggestions details successfully added.';
+            $return['redirect'] = route('bucket-suggestions.list');
+        } elseif ($result == "bucket_not_available") {
+            $return['status'] = 'warning';
+            $return['jscode'] = '$(".submitbtn:visible").removeAttr("disabled");$("#loader").hide();';
+            $return['message'] = 'Please select bucket and Ball.';
+        }  else{
+            $return['status'] = 'error';
+            $return['jscode'] = '$(".submitbtn:visible").removeAttr("disabled");$("#loader").hide();';
+            $return['message'] = 'Something goes to wrong';
+        }
+        echo json_encode($return);
+        exit;
+    }
 }
